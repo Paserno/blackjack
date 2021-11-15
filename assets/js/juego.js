@@ -19,7 +19,7 @@ const crearDeck = () => {
     }
     for (const tipo of tipos) {
         for (const esp of especiales) {
-            deck.push(tipo + esp)
+            deck.push(esp + tipo)
         }
     }
 
@@ -46,5 +46,18 @@ const pedirCarta = () => {
 }
 // deck = [];
 
-// pedirCarta();    
 
+//
+const valorCarta = (carta) => {
+    // substring(); extrae caracteres de una cadena de caracter
+    const valor = carta.substring(0, carta.length - 1);
+    // Funcion isNan() evalua si hay un numero (devuelve tru or false)
+    return (isNaN(valor)) ?
+        (valor === 'A') ? 11 : 10
+        : valor * 1;
+
+
+}
+// se puede manejar como un string
+const valor = valorCarta(pedirCarta());
+console.log({valor});
