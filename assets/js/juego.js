@@ -9,6 +9,14 @@ let deck = [];
 const tipos = ['C', 'D', 'H', 'S'];
 const especiales = ['A', 'J', 'Q', 'K'];
 
+let puntosJugador = 0,
+    puntosCompu = 0;
+
+// Referencias HTMl
+const bPedir = document.querySelector('#btnPedir');
+const puntajeSmall = document.querySelectorAll('small')//.innerText = 'Hola';
+
+
 // Esta Funcion Crea una Nueva Baraja
 const crearDeck = () => {
 
@@ -25,7 +33,7 @@ const crearDeck = () => {
 
 
     // console.log(deck);
-    deck = _.shuffle(deck);
+    deck = _.shuffle(deck);//aleatoridad
     console.log(deck);
     return deck;
 
@@ -40,8 +48,8 @@ const pedirCarta = () => {
         throw 'No Hay cartas en el deck';
     }
     const carta = deck.pop();
-    console.log(deck);
-    console.log(carta); // carta debe de ser de la baraja
+    //console.log(deck);
+    //console.log(carta); // carta debe de ser de la baraja
     return carta;
 }
 // deck = [];
@@ -60,4 +68,16 @@ const valorCarta = (carta) => {
 }
 // se puede manejar como un string
 const valor = valorCarta(pedirCarta());
-console.log({valor});
+// console.log({valor});
+
+
+// Eventos
+bPedir.addEventListener('click', ()=>{
+
+    const carta = pedirCarta();
+
+    puntosJugador = puntosJugador + valorCarta(carta);
+    puntajeSmall[0].innerText = puntosJugador;
+
+    
+});
