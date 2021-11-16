@@ -15,6 +15,8 @@ let puntosJugador = 0,
 // Referencias HTMl
 const bPedir = document.querySelector('#btnPedir');
 const puntajeSmall = document.querySelectorAll('small')//.innerText = 'Hola';
+const divCartasJugador = document.querySelector('#jugador-cartas');
+const divCartasCPU = document.querySelector('#cpu-cartas');
 
 
 // Esta Funcion Crea una Nueva Baraja
@@ -78,6 +80,18 @@ bPedir.addEventListener('click', ()=>{
 
     puntosJugador = puntosJugador + valorCarta(carta);
     puntajeSmall[0].innerText = puntosJugador;
+    // <img class="carta" src="./assets/cartas/JC.png">
+    const imgCarta = document.createElement('img'); 
+    imgCarta.src = `./assets/cartas/${ carta }.png`; 
+    imgCarta.classList.add('carta'); // Agrega clase 
+    divCartasJugador.append(imgCarta); // Añadir
 
-    
+    if (puntosJugador > 21 ) {
+        console.warn('Lo siento mucho, perdiste');
+        bPedir.disabled = true;
+    }else if (puntosJugador === 21){
+        console.warn('21, Ganaste!');
+        bPedir.disabled = true;
+    }
+
 });
