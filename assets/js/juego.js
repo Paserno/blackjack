@@ -14,6 +14,7 @@ let puntosJugador = 0,
 
 // Referencias HTMl
 const bPedir = document.querySelector('#btnPedir');
+const bDetener = document.querySelector('#btnDetener');
 const puntajeSmall = document.querySelectorAll('small')//.innerText = 'Hola';
 const divCartasJugador = document.querySelector('#jugador-cartas');
 const divCartasCPU = document.querySelector('#cpu-cartas');
@@ -65,33 +66,66 @@ const valorCarta = (carta) => {
     return (isNaN(valor)) ?
         (valor === 'A') ? 11 : 10
         : valor * 1;
+}
+
+// Turno de la Compu
+const turnoCompu = (puntosMinimos) => {
+
+    do {
+        const carta = pedirCarta();
+
+        puntosCompu = puntosCompu + valorCarta(carta);
+        puntajeSmall[1].innerText = puntosCompu;
+
+        const imgCarta = document.createElement('img');
+        imgCarta.src = `./assets/cartas/${carta}.png`;
+        imgCarta.classList.add('carta');
+        divCartasCPU.append(imgCarta);
+        if (puntosMinimos > 21) {
+            break;
+        }
+
+    } while ((puntosCompu < puntosMinimos) && (puntosMinimos <= 21));
 
 
 }
-// se puede manejar como un string
-const valor = valorCarta(pedirCarta());
-// console.log({valor});
 
 
-// Eventos
-bPedir.addEventListener('click', ()=>{
+
+
+// Eventos Pedir
+bPedir.addEventListener('click', () => {
 
     const carta = pedirCarta();
 
     puntosJugador = puntosJugador + valorCarta(carta);
     puntajeSmall[0].innerText = puntosJugador;
     // <img class="carta" src="./assets/cartas/JC.png">
-    const imgCarta = document.createElement('img'); 
-    imgCarta.src = `./assets/cartas/${ carta }.png`; 
+    const imgCarta = document.createElement('img');
+    imgCarta.src = `./assets/cartas/${carta}.png`;
     imgCarta.classList.add('carta'); // Agrega clase 
     divCartasJugador.append(imgCarta); // Añadir
 
-    if (puntosJugador > 21 ) {
+    if (puntosJugador > 21) {
         console.warn('Lo siento mucho, perdiste');
+        bDetener.disabled = true;
         bPedir.disabled = true;
-    }else if (puntosJugador === 21){
+        turnoCompu(puntosJugador);
+    } else if (puntosJugador === 21) {
         console.warn('21, Ganaste!');
         bPedir.disabled = true;
+        bDetener.disabled = true;
+        turnoCompu(puntosJugador);
+
     }
+
+});
+
+
+// Evento Dentener
+bDetener.addEventListener('click', () => {
+    bPedir.disabled = true;
+    bDetener.disabled = true;
+    turnoCompu(puntosJugador);
 
 });
