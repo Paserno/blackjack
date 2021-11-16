@@ -6,5 +6,6 @@
 - style.css
 
 📂 js
-- juegos.js
+- juego.js
 - underscore-min.js
+- juego-min.js
